@@ -4,7 +4,26 @@ services:
   nginx:
     build:
       context: ./requirements/nginx
+      args:
+        - DOMAIN=${DOMAIN}
       dockerfile: Dockerfile
-    container_name: NGINX_SERVICE
+    container_name: nginx
     ports:
-      - "80:80" 
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+  
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - /home/loadjou/data
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+
+    restart: unless-stopped
+  

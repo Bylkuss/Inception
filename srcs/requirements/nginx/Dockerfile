@@ -1,7 +1,6 @@
-# Getting variable from .env
-ARG DOMAIN_NAME
-
 FROM alpine:3.19.1
+
+ARG DOMAIN
 
 # Installing nginx, openssl and ca-certifaces services.
 RUN apk add --no-cache nginx openssl ca-certificates  && mkdir -p /run/nginx /etc/ssl /etc/ssl/certs /etc/ssl/private
@@ -22,7 +21,7 @@ COPY portfolioWebsite /usr/share/nginx/portfolioWebsite
 
 # Adding execute permission and run the script
 RUN chmod +x tools/sslGenerateCertificate.sh
-RUN tools/sslGenerateCertificate.sh ladjou
+RUN tools/sslGenerateCertificate.sh $DOMAIN
 
 # Exposing the server ports
 #	- 80:  for http requests.

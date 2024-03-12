@@ -41,7 +41,7 @@ fi
 
 # 1st step: Generate a CA certificate (PEM) for self-signing requests for an SSL certificate.
 openssl req -x509 -newkey rsa:2048 -nodes -keyout "$KEY_SRC/myCA.key" -sha256 -days 365 \
--out "$CERT_SRC/myCA.pem" -subj "/C=CA/ST=QC/L=QC/O=42Québec/OU=loadjou/CN=loadjou.42.fr"
+-out "$CERT_SRC/myCA.pem" -subj "/C=CA/ST=QC/L=QC/O=42Quebec/OU=loadjou/CN=loadjou.42.fr"
 
 
 # 2nd step: Copying the generated certificate (.PEM) to the "ca-certificates" package section in nginx
@@ -73,8 +73,5 @@ EOF
 # Final step: generating a self-signed certificate generated above
 # (it means the request to be signed) by using our own CA.
 openssl x509 -req -in "$CERT_SRC/$DOMAIN_NAME.csr" -CA "$CERT_SRC/myCA.pem" -CAkey "$KEY_SRC/myCA.key" -CAcreateserial -out "$CERT_SRC/$DOMAIN_NAME.crt" -days 365 -sha256 -extfile "$CERT_SRC/$DOMAIN_NAME.ext"
-
-
-
 
 
