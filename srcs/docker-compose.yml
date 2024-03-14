@@ -17,13 +17,22 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
+    image: mariadb
     volumes:
       - /home/loadjou/data
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#      MARIADB_ROOT_PASSWORD: password
     container_name: mariadb
-    ports:
-      - "3306:3306"
-
+    hostname: mariadb
+#    ports:
+#      - "3306:3306"
     restart: unless-stopped
   
+  # adminer service
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
